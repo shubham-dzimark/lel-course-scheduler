@@ -1,0 +1,257 @@
+@import 'antd/dist/reset.css';
+
+/* Layout Styles */
+.app-sider {
+  overflow: auto;
+  height: 100vh;
+  position: fixed !important;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #1a1a1a !important;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.sider-logo {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0 16px;
+}
+
+.sider-logo .anticon {
+  color: #ff6b35 !important;
+}
+
+.app-layout {
+  margin-left: 240px;
+  transition: margin-left 0.2s;
+}
+
+.app-layout.collapsed {
+  margin-left: 80px;
+}
+
+.app-header {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ff4757 100%) !important;
+  padding: 0 32px !important;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 64px;
+}
+
+.app-content {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: calc(100vh - 64px);
+}
+
+/* Card Styles */
+.dashboard-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.15);
+  transform: translateY(-2px);
+}
+
+.dashboard-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  background: linear-gradient(135deg, #fff5f2 0%, #fff 100%);
+  font-weight: 600;
+  color: #ff6b35;
+}
+
+.stat-card {
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #ffffff 0%, #fff8f5 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  border-left: 4px solid #ff6b35;
+}
+
+.stat-card:hover {
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+  transform: translateY(-2px);
+  border-left-color: #ff4757;
+}
+
+.empty-state-card {
+  text-align: center;
+  padding: 80px 20px;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Button Styles */
+.ant-btn-primary {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff4757 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+  font-weight: 500;
+}
+
+.ant-btn-primary:hover {
+  background: linear-gradient(135deg, #ff4757 0%, #ff6b35 100%) !important;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+  transform: translateY(-1px);
+}
+
+.ant-btn {
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.ant-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Table Styles */
+.ant-table-thead > tr > th {
+  background: linear-gradient(135deg, #fff5f2 0%, #fff 100%) !important;
+  font-weight: 600;
+  color: #262626;
+  border-bottom: 2px solid #ff6b35;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background: #fff8f5 !important;
+}
+
+.ant-table-tbody > tr.ant-table-row-selected > td {
+  background: #fff5f2 !important;
+}
+
+/* Select Styles */
+.ant-select-selector {
+  border-radius: 6px !important;
+  border: 1px solid #d9d9d9 !important;
+}
+
+.ant-select-focused .ant-select-selector {
+  border-color: #ff6b35 !important;
+  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.1) !important;
+}
+
+/* Upload Styles */
+.ant-upload-wrapper {
+  width: 100%;
+}
+
+.ant-upload-list-item {
+  border-radius: 6px;
+}
+
+/* Menu Styles */
+.ant-menu-dark {
+  background: #1a1a1a !important;
+}
+
+.ant-menu-dark.ant-menu-inline .ant-menu-item-selected {
+  background: linear-gradient(90deg, #ff6b35 0%, #ff4757 100%) !important;
+}
+
+.ant-menu-dark .ant-menu-item:hover {
+  background: rgba(255, 107, 53, 0.15) !important;
+}
+
+.ant-menu-dark .ant-menu-item-selected .anticon,
+.ant-menu-dark .ant-menu-item-selected span {
+  color: white !important;
+}
+
+/* Statistic Styles */
+.ant-statistic-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #8c8c8c;
+  margin-bottom: 8px;
+}
+
+.ant-statistic-content {
+  font-weight: 600;
+}
+
+/* Custom color overrides for statistics */
+.ant-statistic-content-value {
+  color: #ff6b35;
+}
+
+/* Message and notification colors */
+.ant-message-success .anticon {
+  color: #52c41a;
+}
+
+.ant-message-error .anticon {
+  color: #ff4757;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-layout {
+    margin-left: 0 !important;
+  }
+  
+  .app-sider {
+    position: fixed !important;
+    z-index: 100;
+  }
+  
+  .app-content {
+    padding: 16px;
+  }
+  
+  .app-header {
+    padding: 0 16px !important;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard-card,
+.stat-card {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff4757 100%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ff4757 0%, #ff6b35 100%);
+}
