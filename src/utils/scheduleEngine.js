@@ -125,8 +125,29 @@ const scheduleCourse = (
 
   // For each cadence period, schedule ONE instance of the course
   cadenceStartDates.forEach((cadenceDate) => {
-    // Get all weekdays in the quarter starting from this cadence date
-    const availableDates = quarterDates.filter((date) => date >= cadenceDate);
+    // Calculate the earliest date this instance can start
+    // If there's a previous instance, it must wait for cadence weeks AFTER that instance ends
+    let earliestStartDate = cadenceDate;
+
+    const history = courseHistory.get(course.title) || [];
+    if (history.length > 0) {
+      const lastInstance = history[history.length - 1];
+      // Calculate when the last instance ended (startDate + (sessions - 1) weeks)
+      const lastInstanceEndDate = addWeeks(
+        lastInstance.startDate,
+        course.sessions - 1
+      );
+      // Add cadence weeks to get earliest next start
+      const nextAvailableDate = addWeeks(lastInstanceEndDate, course.cadence);
+      // Use the later of cadenceDate or nextAvailableDate
+      earliestStartDate =
+        nextAvailableDate > cadenceDate ? nextAvailableDate : cadenceDate;
+    }
+
+    // Get all weekdays in the quarter starting from the earliest allowed date
+    const availableDates = quarterDates.filter(
+      (date) => date >= earliestStartDate
+    );
 
     // Try to schedule ONE instance starting from this cadence date
     for (const startDate of availableDates) {
