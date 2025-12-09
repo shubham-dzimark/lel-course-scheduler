@@ -26,7 +26,6 @@ import {
   DashboardOutlined,
   SettingOutlined,
   FileTextOutlined,
-  LineChartOutlined,
 } from "@ant-design/icons";
 import { format } from "date-fns";
 import {
@@ -682,11 +681,6 @@ const App = () => {
               label: "Dashboard",
             },
             { key: "schedule", icon: <CalendarOutlined />, label: "Schedule" },
-            {
-              key: "analytics",
-              icon: <LineChartOutlined />,
-              label: "Analytics",
-            },
             { key: "reports", icon: <FileTextOutlined />, label: "Reports" },
             { key: "settings", icon: <SettingOutlined />, label: "Settings" },
           ]}
