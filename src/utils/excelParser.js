@@ -120,9 +120,11 @@ export const generateOutputExcel = (
   const byWeekSheet = createByWeekSheet(scheduledSessions);
   XLSX.utils.book_append_sheet(workbook, byWeekSheet, "By Week");
 
-  // Tab 5: Calendar Grid
-  const calendarSheet = createCalendarSheet(calendarData);
-  XLSX.utils.book_append_sheet(workbook, calendarSheet, "Calendar View");
+  // Tab 5: Calendar Grid (optional - only if calendarData is provided)
+  if (calendarData) {
+    const calendarSheet = createCalendarSheet(calendarData);
+    XLSX.utils.book_append_sheet(workbook, calendarSheet, "Calendar View");
+  }
 
   // Tab 6: Full Session List
   const sessionSheet = createSessionListSheet(scheduledSessions);
