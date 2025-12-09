@@ -123,12 +123,12 @@ const scheduleCourse = (
     quarterDates
   );
 
-  // For each cadence period, try to schedule the course on ALL available days/times
+  // For each cadence period, schedule ONE instance of the course
   cadenceStartDates.forEach((cadenceDate) => {
     // Get all weekdays in the quarter starting from this cadence date
     const availableDates = quarterDates.filter((date) => date >= cadenceDate);
 
-    // Try to schedule on each available date
+    // Try to schedule ONE instance starting from this cadence date
     for (const startDate of availableDates) {
       const scheduled = scheduleCourseSessions(
         course,
@@ -151,7 +151,8 @@ const scheduleCourse = (
         });
         courseHistory.set(course.title, history);
 
-        // Successfully scheduled, continue to try more dates in this cadence period
+        // Successfully scheduled ONE instance for this cadence period, move to next cadence
+        break;
       }
     }
   });
@@ -317,9 +318,6 @@ const findSuitableSlot = (
 
   const dayOfWeek = DAY_NAMES[date.getDay()];
 
-  // Check constraints from history
-  const lastInstance = history[history.length - 1];
-
   for (const slot of dayData.slots) {
     if (!slot.available) continue;
 
@@ -331,21 +329,32 @@ const findSuitableSlot = (
       continue;
     }
 
-    // Check constraints if there's history
-    if (lastInstance) {
+    // Check constraints against ALL previous instances (not just the last one)
+    let violatesConstraints = false;
+
+    for (const previousInstance of history) {
       // Cannot be same day (except Financial Intelligence)
-      if (!isFinancialIntelligence && dayOfWeek === lastInstance.dayOfWeek) {
-        continue;
+      if (
+        !isFinancialIntelligence &&
+        dayOfWeek === previousInstance.dayOfWeek
+      ) {
+        violatesConstraints = true;
+        break;
       }
 
       // Must be at least 3 hours different
       const timeDiff = getTimeDifferenceInHours(
         slot.start,
-        lastInstance.startTime
+        previousInstance.startTime
       );
       if (timeDiff < 3) {
-        continue;
+        violatesConstraints = true;
+        break;
       }
+    }
+
+    if (violatesConstraints) {
+      continue;
     }
 
     return {
