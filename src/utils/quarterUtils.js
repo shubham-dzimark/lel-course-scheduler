@@ -1,23 +1,23 @@
 /**
  * Quarter Utilities
  * Handles quarter definitions and date calculations
- * Financial year starts in April
+ * Calendar year starts in January
  */
 
-import { startOfMonth, endOfMonth, addMonths } from 'date-fns';
+import { startOfMonth, endOfMonth, addMonths } from "date-fns";
 
-// Quarter definitions (Financial year starts in April)
+// Quarter definitions (Calendar year starts in January)
 export const QUARTERS = {
-  Q1: { name: 'Q1', months: [4, 5, 6], label: 'Q1 (Apr-Jun)' },
-  Q2: { name: 'Q2', months: [7, 8, 9], label: 'Q2 (Jul-Sep)' },
-  Q3: { name: 'Q3', months: [10, 11, 12], label: 'Q3 (Oct-Dec)' },
-  Q4: { name: 'Q4', months: [1, 2, 3], label: 'Q4 (Jan-Mar)' },
+  Q1: { name: "Q1", months: [1, 2, 3], label: "Q1 (Jan-Mar)" },
+  Q2: { name: "Q2", months: [4, 5, 6], label: "Q2 (Apr-Jun)" },
+  Q3: { name: "Q3", months: [7, 8, 9], label: "Q3 (Jul-Sep)" },
+  Q4: { name: "Q4", months: [10, 11, 12], label: "Q4 (Oct-Dec)" },
 };
 
 /**
  * Get quarter date range
  * @param {string} quarter - Quarter name (Q1, Q2, Q3, Q4)
- * @param {number} year - Financial year start year (e.g., 2025 for FY 2025-26)
+ * @param {number} year - Calendar year (e.g., 2025)
  * @returns {Object} Object with startDate and endDate
  */
 export const getQuarterDateRange = (quarter, year) => {
@@ -27,26 +27,21 @@ export const getQuarterDateRange = (quarter, year) => {
   }
 
   const [firstMonth, , lastMonth] = quarterInfo.months;
-  
-  // For Q4 (Jan-Mar), use the next calendar year
-  // For Q1-Q3 (Apr-Dec), use the same calendar year
-  // Example: FY 2025-26 → Q1-Q3 are in 2025, Q4 is in 2026
-  const startYear = quarter === 'Q4' ? year + 1 : year;
-  const endYear = quarter === 'Q4' ? year + 1 : year;
 
-  const startDate = startOfMonth(new Date(startYear, firstMonth - 1, 1));
-  const endDate = endOfMonth(new Date(endYear, lastMonth - 1, 1));
+  // All quarters are in the same calendar year
+  const startDate = startOfMonth(new Date(year, firstMonth - 1, 1));
+  const endDate = endOfMonth(new Date(year, lastMonth - 1, 1));
 
   return { startDate, endDate };
 };
 
 /**
- * Get financial year start date (April 1st)
+ * Get calendar year start date (January 1st)
  * @param {number} year - Calendar year
- * @returns {Date} Financial year start date
+ * @returns {Date} Calendar year start date
  */
 export const getFinancialYearStart = (year) => {
-  return new Date(year, 3, 1); // April 1st (month is 0-indexed)
+  return new Date(year, 0, 1); // January 1st (month is 0-indexed)
 };
 
 /**
@@ -58,13 +53,13 @@ export const getFinancialYearStart = (year) => {
 export const getAllDatesInQuarter = (quarter, year) => {
   const { startDate, endDate } = getQuarterDateRange(quarter, year);
   const dates = [];
-  
+
   let currentDate = new Date(startDate);
   while (currentDate <= endDate) {
     dates.push(new Date(currentDate));
     currentDate.setDate(currentDate.getDate() + 1);
   }
-  
+
   return dates;
 };
 
@@ -76,7 +71,7 @@ export const getAllDatesInQuarter = (quarter, year) => {
  */
 export const getWeekdaysInQuarter = (quarter, year) => {
   const allDates = getAllDatesInQuarter(quarter, year);
-  return allDates.filter(date => {
+  return allDates.filter((date) => {
     const day = date.getDay();
     return day >= 1 && day <= 5; // Monday to Friday
   });
@@ -90,8 +85,8 @@ export const getWeekdaysInQuarter = (quarter, year) => {
  */
 export const formatQuarter = (quarter, year) => {
   const quarterInfo = QUARTERS[quarter];
-  if (!quarterInfo) return '';
-  
+  if (!quarterInfo) return "";
+
   return `${quarterInfo.label} ${year}`;
 };
 
@@ -100,7 +95,7 @@ export const formatQuarter = (quarter, year) => {
  * @returns {Array} Array of quarter options
  */
 export const getQuarterOptions = () => {
-  return Object.values(QUARTERS).map(q => ({
+  return Object.values(QUARTERS).map((q) => ({
     value: q.name,
     label: q.label,
   }));

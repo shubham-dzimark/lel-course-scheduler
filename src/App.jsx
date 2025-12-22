@@ -56,18 +56,18 @@ const App = () => {
   const [loading, setLoading] = useState(false);
 
   const quarters = [
-    { value: "Q1", label: "Q1 (Apr-Jun)" },
-    { value: "Q2", label: "Q2 (Jul-Sep)" },
-    { value: "Q3", label: "Q3 (Oct-Dec)" },
-    { value: "Q4", label: "Q4 (Jan-Mar)" },
+    { value: "Q1", label: "Q1 (Jan-Mar)" },
+    { value: "Q2", label: "Q2 (Apr-Jun)" },
+    { value: "Q3", label: "Q3 (Jul-Sep)" },
+    { value: "Q4", label: "Q4 (Oct-Dec)" },
   ];
 
   const currentYear = new Date().getFullYear();
-  const financialYears = Array.from({ length: 5 }, (_, i) => {
+  const years = Array.from({ length: 5 }, (_, i) => {
     const year = currentYear + i;
     return {
       value: year,
-      label: `${year}-${String(year + 1).slice(-2)}`,
+      label: `${year}`,
     };
   });
 
@@ -189,7 +189,7 @@ const App = () => {
       title: "Date",
       dataIndex: "date",
       key: "date",
-      render: (date) => format(date, "EEE, MMM dd, yyyy"),
+      render: (date) => format(date, "MM-dd-yyyy (EEE)"),
       sorter: (a, b) => a.date - b.date,
     },
     {
@@ -258,18 +258,18 @@ const App = () => {
           <Row gutter={16}>
             <Col xs={24} sm={16} md={18}>
               <Text strong style={{ display: "block", marginBottom: "8px" }}>
-                Financial Year
+                Year
               </Text>
               <Select
-                placeholder="Select Financial Year"
+                placeholder="Select Year"
                 style={{ width: "100%" }}
                 size="large"
                 value={selectedYear || undefined}
                 onChange={setSelectedYear}
               >
-                {financialYears.map((fy) => (
-                  <Option key={fy.value} value={fy.value}>
-                    {fy.label}
+                {years.map((y) => (
+                  <Option key={y.value} value={y.value}>
+                    {y.label}
                   </Option>
                 ))}
               </Select>
@@ -698,7 +698,7 @@ const App = () => {
           <Space>
             <Text style={{ color: "white", fontSize: "14px" }}>
               {selectedYear
-                ? `FY ${selectedYear}-${String(selectedYear + 1).slice(-2)} ${
+                ? `${selectedYear} ${
                     selectedQuarterFilter !== "all"
                       ? `- ${selectedQuarterFilter}`
                       : "(All Quarters)"

@@ -1,12 +1,15 @@
-import React from 'react';
-import { format } from 'date-fns';
-import './CalendarView.css';
+import React from "react";
+import { format } from "date-fns";
+import "./CalendarView.css";
 
 const CalendarView = ({ calendarData, scheduledSessions }) => {
   if (!calendarData || !scheduledSessions || scheduledSessions.length === 0) {
     return (
       <div className="calendar-empty">
-        <p>No schedule generated yet. Upload a cadence file and generate the schedule.</p>
+        <p>
+          No schedule generated yet. Upload a cadence file and generate the
+          schedule.
+        </p>
       </div>
     );
   }
@@ -15,8 +18,8 @@ const CalendarView = ({ calendarData, scheduledSessions }) => {
 
   // Group sessions by date for easier lookup
   const sessionsByDate = {};
-  scheduledSessions.forEach(session => {
-    const dateKey = format(session.date, 'yyyy-MM-dd');
+  scheduledSessions.forEach((session) => {
+    const dateKey = format(session.date, "yyyy-MM-dd");
     if (!sessionsByDate[dateKey]) {
       sessionsByDate[dateKey] = [];
     }
@@ -24,16 +27,26 @@ const CalendarView = ({ calendarData, scheduledSessions }) => {
   });
 
   // Filter to only show dates that have sessions
-  const datesWithSessions = dates.filter(date => {
-    const dateKey = format(date, 'yyyy-MM-dd');
+  const datesWithSessions = dates.filter((date) => {
+    const dateKey = format(date, "yyyy-MM-dd");
     return sessionsByDate[dateKey] && sessionsByDate[dateKey].length > 0;
   });
 
   return (
     <div className="calendar-view-container">
       <div className="calendar-hint">
-        <svg className="hint-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <svg
+          className="hint-icon"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
         </svg>
         <span>Scroll down to view all scheduled dates</span>
       </div>
@@ -51,10 +64,10 @@ const CalendarView = ({ calendarData, scheduledSessions }) => {
           </thead>
           <tbody>
             {datesWithSessions.map((date, dateIndex) => {
-              const dateKey = format(date, 'yyyy-MM-dd');
-              const dayName = format(date, 'EEEE');
-              const dateDisplay = format(date, 'MMM dd, yyyy');
-              
+              const dateKey = format(date, "yyyy-MM-dd");
+              const dayName = format(date, "EEEE");
+              const dateDisplay = format(date, "MM-dd-yyyy");
+
               return (
                 <tr key={dateIndex}>
                   <td className="date-cell">
@@ -69,8 +82,12 @@ const CalendarView = ({ calendarData, scheduledSessions }) => {
                       <td key={slotIndex} className="session-cell">
                         {sessions.map((session, sessionIndex) => (
                           <div key={sessionIndex} className="session-item">
-                            <span className="session-course">{session.course}</span>
-                            <span className="session-number">Session {session.sessionNumber}</span>
+                            <span className="session-course">
+                              {session.course}
+                            </span>
+                            <span className="session-number">
+                              Session {session.sessionNumber}
+                            </span>
                           </div>
                         ))}
                       </td>

@@ -160,7 +160,7 @@ const createSummarySheet = (sessions, quarter, year) => {
     ["LEL Course Schedule Summary"],
     [""],
     ["Quarter", quarter],
-    ["Financial Year", `${year}-${String(year + 1).slice(-2)}`],
+    ["Year", `${year}`],
     [""],
     ["Total Sessions Scheduled", sessions.length],
     ["Unique Courses", courseCount],
@@ -219,7 +219,7 @@ const createByCourseSheet = (sessions) => {
       courseSessions.forEach((session, index) => {
         data.push([
           index === 0 ? courseName : "", // Only show course name on first row
-          format(session.date, "MMM dd, yyyy"),
+          format(session.date, "MM-dd-yyyy"),
           format(session.date, "EEE"),
           session.sessionNumber,
           session.startTime,
@@ -270,7 +270,7 @@ const createByMonthSheet = (sessions) => {
       sortedSessions.forEach((session, index) => {
         data.push([
           index === 0 ? monthName : "",
-          format(session.date, "MMM dd"),
+          format(session.date, "MM-dd"),
           format(session.date, "EEE"),
           session.courseName,
           session.sessionNumber,
@@ -323,8 +323,8 @@ const createByWeekSheet = (sessions) => {
 
       sortedSessions.forEach((session, index) => {
         data.push([
-          index === 0 ? format(weekStart, "MMM dd, yyyy") : "",
-          format(session.date, "MMM dd"),
+          index === 0 ? format(weekStart, "MM-dd-yyyy") : "",
+          format(session.date, "MM-dd"),
           format(session.date, "EEE"),
           session.courseName,
           session.sessionNumber,
@@ -361,7 +361,7 @@ const createCalendarSheet = (calendarData) => {
   // Create header row with dates that have sessions
   const headers = [
     "Time Slot",
-    ...datesWithSessions.map((date) => format(date, "MMM dd, yyyy")),
+    ...datesWithSessions.map((date) => format(date, "MM-dd-yyyy")),
   ];
 
   // Create data rows - only for time slots that have sessions
@@ -407,7 +407,7 @@ const createSessionListSheet = (sessions) => {
   ];
 
   const rows = sessions.map((session) => [
-    format(session.date, "dd-MM-yyyy"),
+    format(session.date, "MM-dd-yyyy"),
     session.instructorFirstName || "",
     session.instructorLastName || "",
     session.sessionNumber,
